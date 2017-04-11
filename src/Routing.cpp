@@ -51,5 +51,26 @@ void Routing::forward(Packet *pkt){
         return;
 
     // TODO flood the packet to everyone that is needed
+	
+}
 
+void Routing::retransmission(Packet *pkt){
+	//After a packet is lost or damaged, there should be  retransmission of that same packet.
+	//This can be detected either by the PAR (positive ack with retransmission) or by the checksum.
+	//So these two properties of a packet should be checked.
+	
+	//If the checksum is different at the receiver the the one from the sender then retransmit
+	packet_repr pkt_struct = pkt->getPacket();
+	packet_repr temp_pkt_struct = p->getPacket();
+	if(pkt_struct.checksum != temp_pkt_struct.checksum){
+		//The packet does contain a bit error and should be send again
+		//unless it is an old packet
+		if(isNew(pkt) == false) 
+			return;
+		//Sending again, try to call forward function?
+		void forward(Packet *pkt);
+	}
+		//The packet has no checksum errors
+	
+	
 }

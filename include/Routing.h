@@ -20,6 +20,7 @@ private:
         void incrementSeq(Packet *pkt);
         bool isNew(Packet *pkt);
         void forward(Packet *pkt);
+		void retransmission(Packet *pkt);
 };
 
 #endif /* ROUTING_H_ */
