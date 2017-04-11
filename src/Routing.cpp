@@ -48,8 +48,13 @@ QByteArray Routing::forward(Packet *pkt){
 //    if(isNew(pkt) == false)       // TODO
 //        return QByteArray("", 0);
 
-    // TODO flood the packet to everyone that is needed
-	
+    MessageProto::Message message;
+    pkt->getPacket(&message);
+    std::string payload = message.SerializeAsString();
+
+    //std::cout << payload << " -> routed\n";
+    QByteArray byteArray(payload.c_str(), payload.length());
+    return byteArray;
 }
 
 void Routing::retransmission(Packet *pkt){
@@ -63,18 +68,13 @@ void Routing::retransmission(Packet *pkt){
 	if(pkt_struct.checksum != temp_pkt_struct.checksum){
 		//The packet does contain a bit error and should be send again
 		//unless it is an old packet
-		if(isNew(pkt) == false) 
-			return;
+		
 		//Sending again, try to call forward function?
-		void forward(Packet *pkt);
+		forward(Packet *pkt);
 	}
-		//The packet has no checksum errors
+		//The packet has no checksum errors 
 	
-    MessageProto::Message message;
-    pkt->getPacket(&message);
-    std::string payload = message.SerializeAsString();
-
-    //std::cout << payload << " -> routed\n";
-    QByteArray byteArray(payload.c_str(), payload.length());
-    return byteArray;
+	//Next check for the ACKs coming from the 
+	return QByteArray("", 0);
 }
+
