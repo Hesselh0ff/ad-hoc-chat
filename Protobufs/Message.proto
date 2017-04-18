@@ -1,24 +1,20 @@
-package MessageProto;
+syntax = "proto3";
+
+package pb;
 
 message Message {
-    // Message ID, sender and receiver node ID.
-    optional int32 msg_id = 1;
-    optional string sender = 2;
-    optional string receiver = 3;
+    string name = 1;        // Sender's name
+    string receiver = 2;    // Receiver's name
+    string chatname = 7;    // The chat this message belongs to
+    bytes data = 3;         // Data
 
-    // Raft flags
-    enum Flags {
-        CONNECTED = 0;
-        LEADER = 1;
-        VOTE = 2;
-        CANDIDATE = 3;
-    }
+    // Files
+    bool is_file = 4;       // Is it a file?
+    string file_name = 8;   // Filename
 
-    repeated Flags flags = 4;
+    // Fragmentation
+    bool more = 5;          // If the message is fragmented
 
-    // Checksum of the message
-    optional string checksum = 5;
-
-    // Data that is sent (text, image, etc...). This part might be encrypted for private chats.
-    optional bytes payload = 6;
+    // Which is the order of this message (1st, 2nd etc..) - starting from 0
+    int32 msg_seq = 6;
 }
