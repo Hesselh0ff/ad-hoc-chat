@@ -15,18 +15,17 @@
 
 class Routing {
 public:
+	
+	//intitiate sequence number:
+	int seq_nmr = rand(); 	//seq_nmr can now have a value between 0 and 32767	(rand_MAX)
+	
 	Routing();
 	virtual ~Routing();
     std::vector<Packet*> received_data;
-
-private:
-        void incrementSeq(Packet *pkt);
-        bool isNew(Packet *pkt);
-        void forward(Packet *pkt);
-		void retransmission(Packet *pkt);
-
     void incrementSeq(Packet *pkt);
     bool isNew(Packet *pkt);
+    
+	void Extend_UDP_Header(Packet *pkt);
     QByteArray forward(Packet *pkt);
 };
 

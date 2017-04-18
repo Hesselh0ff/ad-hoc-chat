@@ -29,14 +29,15 @@ const int decrytpion_key = /*key should be known to all users*/ 80;
 const int n = 423; //a random number to make it more random.
 
 struct crypt : std::binary_function<int, int, int> { //creates a function object with 2 arguments
-	int operator()(int input, int key) const {	//This is what should happen with the 2 arguments
-		int result = 1;
-		for(int i=0; i<key; i++) {
-			result = result * input; //Since the result is 1, the new result will just be the input
-			result = result % n;
-		}
-		return result;
-	}
+
+        int operator()(int input, int key) const {	//This is what should happen with the 2 arguments
+                int result = 1;
+                for(int i=0; i<key; i++) {
+                        result = result * input; //Since the result is 1, the new result will just be the input
+                        result = result % n;
+                }
+                return result;
+        }
 }; //end struct
 
 //Since the message has to be known by both the encrypt/decrypt function
@@ -53,6 +54,7 @@ void Security::encrypt(){
 					std::bind2nd(crypt(), encryption_key) //binds the encryption key to second argument(int key) after running crypt() on it.
 					); //Now the message should be encrypted with the
 					   //and should be encrypted with encryption key
+
 }
 
 void Security::decrypt(){
@@ -64,6 +66,7 @@ void Security::decrypt(){
 					); //Now the message is decrypted and transformed back
 					   //into characters.
 	std::cout << "\n";
+
 }
 
 std::string Security::getMD5sum(std::string str){
@@ -85,4 +88,6 @@ std::string Security::getFileMD5(std::string path){
 
     std::string ret_str = md5.digestFile(cstr);
     delete cstr;
+
     return ret_str;
+}
